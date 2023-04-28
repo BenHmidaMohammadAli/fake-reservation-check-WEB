@@ -1,0 +1,113 @@
+{% extends 'layouts/base.html' %}
+
+{% block title %} {% endblock title %}
+
+{% block stylesheets %}
+
+{% endblock stylesheets %}
+
+{% block content %}
+
+  <div class="header bg-primary pb-6">
+    <div class="container-fluid">
+      <div class="header-body">
+        <div class="row align-items-center py-4">
+
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Page content -->
+  <div class="container-fluid mt--6">
+    <div class="row">
+      <div class="col">
+        <div class="card">
+          <!-- Card header -->
+          <div class="card-header border-0">
+            <h3 class="mb-0">Flights available </h3>
+            <hr>
+            <form>
+              <h6 class="heading-small text-muted mb-4">Search</h6>
+              <div class="pl-lg-4">
+                <div class="row">
+                  <div class="col-lg-4">
+                    <div class="form-group">
+                      <input type="text" id="From" class="form-control" placeholder="From" >
+                    </div>
+                  </div>
+                  <div class="col-lg-4">
+                    <div class="form-group">
+                      <input type="text" id="To" class="form-control" placeholder="To">
+                    </div>
+                  </div>
+                  <div class="col-lg-4">
+                    <div class="form-group">
+                      <input type="date" id="Date" class="form-control" placeholder="Date">
+                    </div>
+                  </div>
+
+                  <div class="card-header text-center border-0 pt-8 pt-md-4 pb-0 pb-md-4">
+                    <div class="d-flex justify-content-between">
+                      <a href="#" class="btn btn-sm btn-default float-right">Filters</a>
+                    </div>
+                  </div>
+                  
+                </div>
+              </div>                        
+            </form>
+          </div>
+
+          <!-- List of flight as items  -->
+          <div class="container mt-5">
+            <div class="row">  
+                <!-- start Card-->
+              {% for f in flights %}
+              <div class="col-md-4">
+                    <div class="card p-3">
+                        <div class="d-flex flex-row mb-3">
+                          <img src="https://i.imgur.com/ccMhxvC.png" width="70">
+                          <div class="d-flex flex-column ml-2">
+                            <span>{{f.flight_UID}}</span>
+                            <span class="text-black-50">{{f.flight_name}}</span>
+ 
+                          </div>
+                        </div>
+                        <h5> From: {{f.From}} - TO: {{f.To}}</h5>
+                        <div class="d-flex justify-content-between install mt-3">
+                          <span>{{f.flight_start}}</span>
+                          <span class="text-primary"> <a href =""> View </a>
+                            <i class="fa fa-angle-right"></i>
+                          </span>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+
+                <!-- End Card-->
+
+
+              </div>
+            </div>
+          </div>
+
+
+
+
+          <!--end  List of flight as items  -->
+
+        </div>
+      </div>
+    </div>
+
+    {% include "includes/footer.html" %}
+
+  </div>
+
+{% endblock content %}
+
+<!-- Specific JS goes HERE --> 
+{% block javascripts %}
+
+{% endblock javascripts %}
+

@@ -1,0 +1,103 @@
+<nav class="sidenav navbar navbar-vertical  fixed-left  navbar-expand-xs navbar-light bg-white" id="sidenav-main">
+  <div class="scrollbar-inner">
+    <!-- Brand -->
+    <div class="sidenav-header  align-items-center">
+      <a class="navbar-brand" href="/">
+        <img src="/static/assets/img/brand/blue.png" class="navbar-brand-img" alt="Argon Design - Jinja Template Logo.">
+      </a>
+    </div>
+    <div class="navbar-inner">
+      <!-- Collapse -->
+      <div class="collapse navbar-collapse" id="sidenav-collapse-main">
+        <!-- Nav items -->
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a class="nav-link {% if segment == 'Reservation' %} active {% endif %}" href="{% url 'dashboard'%}">
+              <i class="ni ni-tv-2 text-primary"></i>
+              <span class="nav-link-text">Dashboard - Reservation </span>
+            </a>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link {% if segment == 'Rating' %} active {% endif %}" href="{% url 'rating_dashboard' %}">
+              <i class="ni ni-tv-2 text-primary"></i>
+              <span class="nav-link-text">Dashboard - Rating </span>
+            </a>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link {% if segment == 'users' %} active {% endif %}" href="{% url 'user_list'%}">
+              <i class="ni ni-tv-2 text-primary"></i>
+              <span class="nav-link-text">List of users </span>
+            </a>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link {% if segment == 'passengers' %} active {% endif %}" href="{% url 'passenger_list'%}">
+              <i class="ni ni-tv-2 text-primary"></i>
+              <span class="nav-link-text">List of passengers </span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link {% if segment == 'flights' %} active {% endif %}" href="{% url 'flight_list'%}">
+              <i class="ni ni-tv-2 text-primary"></i>
+              <span class="nav-link-text">Our flights </span>
+            </a>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link {% if segment == 'flights_available' %} active {% endif %}" href="{% url 'flights_available_list'%}">
+              <i class="ni ni-tv-2 text-primary"></i>
+              <span class="nav-link-text">Flights available</span>
+            </a>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link {% if segment == 'reservations' %} active {% endif %}" href="{% url 'reservation_list'%}">
+              <i class="ni ni-tv-2 text-primary"></i>
+              <span class="nav-link-text">Reservations </span>
+            </a>
+          </li>  
+
+          <li class="nav-item">
+            <a class="nav-link {% if segment == 'my_reservations' %} active {% endif %}" href="{% url 'my_reservation_list'%}">
+              <i class="ni ni-tv-2 text-primary"></i>
+              <span class="nav-link-text">My Reservations </span>
+            </a>
+          </li>   
+
+          <li class="nav-item">
+            <a class="nav-link {% if segment == 'predict_reservations' %} active {% endif %}" href="{% url 'predict_reservations_list'%}">
+              <i class="ni ni-tv-2 text-primary"></i>
+              <span class="nav-link-text">Predict Reservations Completion </span>
+            </a>
+          </li>                
+        </ul>
+        <!-- Divider -->
+        <hr class="my-3">
+        <!-- Heading -->
+        <h6 class="navbar-heading p-0 text-muted">
+          <span class="docs-normal">Other</span>
+        </h6>
+        <!-- Navigation -->
+        <ul class="navbar-nav mb-md-3">
+          
+          <li class="nav-item">
+            <a class="nav-link {% if 'profil' in segment %} active {% endif %}" href="{% url 'profil' %}">
+              <i class="ni ni-single-02 text-yellow"></i>
+              <span class="nav-link-text">Profile</span>
+            </a>
+          </li>
+          
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'logout' %}">
+              <i class="ni ni-user-run text-red"></i>
+              <span class="nav-link-text">Logout</span>
+            </a>
+          </li> 
+
+        </ul>
+      </div>
+    </div>
+  </div>
+</nav>
