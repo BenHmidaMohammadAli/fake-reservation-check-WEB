@@ -1,5 +1,5 @@
 from django.db import models
-
+from authentication.models import Passenger
 # Create your models here.
 
 class Flight(models.Model):
@@ -16,3 +16,18 @@ class Flight(models.Model):
     date_created = models.DateTimeField(auto_now_add= True, null=True)  
     def __str__(self) :
         return self.name 
+    
+class ReservationFlight(models.Model):
+    passenger = models.OneToOneField(Passenger, null=True, on_delete=models.CASCADE)
+    flight = models.OneToOneField(Flight, null=True, on_delete=models.CASCADE)
+    nbr_days_stay = models.IntegerField(null = True, blank=True)
+    extra_baggage = models.BooleanField(null = True, blank=True) 
+    meal = models.BooleanField(null = True, blank=True) 
+    preffered_seat = models.BooleanField(null = True, blank=True) 
+    nbr_seat = models.IntegerField(null = True, blank=True)
+    state = models.BooleanField(null = True, blank=True)
+
+class ReservationFlightPredictions(models.Model):
+    reservationFlight = models.OneToOneField(ReservationFlight, null=True, on_delete=models.CASCADE)
+    complete = models.BooleanField(null = True, blank=True)
+ 

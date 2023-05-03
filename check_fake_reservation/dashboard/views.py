@@ -18,14 +18,6 @@ def home_admin_reservation_dashboard (request):
     return render(request, 'home/index_reservation.html', context)
 
 
-def home_admin_rating_dashboard (request):
-    context ={
-        'segment':'Rating',
-        'dashboard_type':'Rating dashboard',
-        }
-    return render(request, 'home/index_rating.html', context)
-
-
 #User Controllerss
 def user_list (request):
     users = User.objects.all()    

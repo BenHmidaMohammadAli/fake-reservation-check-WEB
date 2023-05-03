@@ -3,9 +3,6 @@ from . import views
 
 urlpatterns = [
     path('', views.home_admin_reservation_dashboard, name='dashboard'),
-    
-    path('rating_dashboard', views.home_admin_rating_dashboard, name='rating_dashboard'),
-
     path('profil', views.user_profil, name='profil'),
     
     #users 
