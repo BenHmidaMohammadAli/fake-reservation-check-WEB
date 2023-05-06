@@ -31,7 +31,9 @@ urlpatterns = [
     
     #flights available
     path('flights_available', views.flights_available_list, name='flights_available_list'),
-
+    path('flights_available_view/<str:pk>/', views.flights_available_view, name='flights_available_view'),
+    
+    
     path('reservations', views.reservation_list, name='reservation_list'),
     
     path('predict_reservations', views.predict_reservation_list, name='predict_reservations_list'),

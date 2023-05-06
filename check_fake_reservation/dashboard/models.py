@@ -3,7 +3,6 @@ from authentication.models import Passenger
 # Create your models here.
 
 class Flight(models.Model):
-
     flight_name = models.CharField(max_length=200, null=True)
     flight_UID = models.CharField(max_length=200, null=True)
     flight_duration = models.FloatField(null=True)
@@ -30,4 +29,4 @@ class ReservationFlight(models.Model):
 class ReservationFlightPredictions(models.Model):
     reservationFlight = models.OneToOneField(ReservationFlight, null=True, on_delete=models.CASCADE)
     complete = models.BooleanField(null = True, blank=True)
- 
+

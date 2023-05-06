@@ -76,7 +76,8 @@
                         <h5> From: {{f.From}} - TO: {{f.To}}</h5>
                         <div class="d-flex justify-content-between install mt-3">
                           <span>{{f.flight_start}}</span>
-                          <span class="text-primary"> <a href =""> View </a>
+                          
+                          <span class="text-primary"> <a href ="{% url 'flights_available_view' f.id %}"> View </a>
                             <i class="fa fa-angle-right"></i>
                           </span>
                         </div>

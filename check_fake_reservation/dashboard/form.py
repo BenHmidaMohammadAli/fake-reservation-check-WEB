@@ -1,7 +1,7 @@
 from django.forms import ModelForm
 from django import forms
 from authentication.models import Passenger
-from .models import Flight
+from .models import Flight, ReservationFlight
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 
@@ -184,3 +184,40 @@ class CreateFlightForm (ModelForm):
         if flight_start and flight_end:
             if flight_start >= flight_end:
                 raise forms.ValidationError("Flight start must be less than flight end")
+            
+class CreateFlightReservationForm (ModelForm):
+    nbr_days_stay = forms.CharField(
+        widget= forms.TextInput(
+            attrs={
+                "placeholder": "Travel Duration",
+                "class": "form-control",
+            }
+        ))
+    CHOICES = [(True, 'Yes'), (False, 'No')]
+    extra_baggage = forms.ChoiceField(
+        choices=CHOICES,
+        widget= forms.RadioSelect (
+        ))
+    
+    meal = forms.ChoiceField(
+        choices=CHOICES,
+        widget= forms.RadioSelect (
+        ))
+    
+    preffered_seat = forms.ChoiceField(
+        choices=CHOICES,
+        widget= forms.RadioSelect (
+        ))
+    
+    nbr_seat = forms.CharField(
+        widget= forms.TextInput(
+            attrs={
+                "placeholder": "Numbre of seat (write 0 if random)",
+                "class": "form-control",
+            }
+        ))
+
+    class Meta:
+        model = ReservationFlight
+        fields = ['nbr_days_stay', 'extra_baggage' , 'meal', 'preffered_seat','nbr_seat']
+    

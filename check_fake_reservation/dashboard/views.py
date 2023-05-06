@@ -1,10 +1,10 @@
 from django.shortcuts import render
 from .decorators import *
 from authentication.models import Passenger
-from .form import CreatePassengerForm  , CreateUserForm, CreateFlightForm
+from .form import CreatePassengerForm  , CreateUserForm, CreateFlightForm , CreateFlightReservationForm
 from django.contrib.auth.models import User
 from django.contrib import messages
-from .models import Flight
+from .models import Flight ,ReservationFlight ,ReservationFlightPredictions
 # Create your views here.
 
 
@@ -268,39 +268,73 @@ def flights_available_list (request):
         }
     return render(request, 'home/flights_available/list.html', context)
 
-
-
-
-#predict_reservation
-def predict_reservation_list (request):
+def flights_available_view (request, pk):
+    flight = Flight.objects.get(id=pk)
+    user = request.user
+    form  = CreateFlightReservationForm()
+    
+    if request.method == 'POST' :
+        form = CreateFlightReservationForm(request.POST)
+        if form.is_valid():
+            instance = form.save()  
+            instance.passenger = user
+            instance.flight = flight
+            instance.state = False
+            instance.save()
+            return redirect ('flights_available_list')
+        else:
+            print("------------", form.errors)
+            messages.error(request, form.errors)
     context ={
-        'segment':'predict_reservations',
-        'dashboard_type':'List Reservations predicted',
+        'form':form ,
+        'flight':flight ,
+        'segment':'flights_available',
+        'dashboard_type':'Flights available To reservation',
         }
-    return render(request, 'home/predict_reservation/list.html', context)
+    return render(request, 'home/flights_available/show.html', context)
 
 
-def reservation_list (request):
-    context ={
-        'segment':'reservations',
-        'dashboard_type':'List Reservations',
-        }
-    return render(request, 'home/reservation/list.html', context)
-
-def predict_reservation_list (request):
-    context ={
-        'segment':'predict_reservations',
-        'dashboard_type':'List Reservations predicted',
-        }
-    return render(request, 'home/predict_reservation/list.html', context)
-
-
+#my reservation list 
 def my_reservation_list (request):
+    user = request.user
+    flight_resrvation = ReservationFlight.objects.filter(passenger_id=user.id)
+    
     context ={
         'segment':'my_reservations',
         'dashboard_type':'List of my reservations',
         }
     return render(request, 'home/my_reservation/list.html', context)
+
+
+def reservation_list (request):
+    flight_resrvation = ReservationFlight.objects.all()
+
+    context ={
+        'flight_resrvation': flight_resrvation,
+        'segment':'reservations',
+        'dashboard_type':'List Reservations',
+        }
+    return render(request, 'home/reservation/list.html', context)
+
+
+#predict_reservation
+def predict_reservation_list (request):
+   
+    context ={
+        'segment':'predict_reservations',
+        'dashboard_type':'List Reservations predicted',
+        }
+    return render(request, 'home/predict_reservation/list.html', context)
+
+
+
+def predict_reservation_list (request):
+    context ={
+        'segment':'predict_reservations',
+        'dashboard_type':'List Reservations predicted',
+        }
+    return render(request, 'home/predict_reservation/list.html', context)
+
 
 
 def user_profil (request):
