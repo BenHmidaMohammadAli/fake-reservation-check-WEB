@@ -21,7 +21,7 @@
         <div class="card">
           <!-- Card header -->
           <div class="card-header border-0">
-            <h3 class="mb-0">Passengers </h3>
+            <h3 class="mb-0">Reservations </h3>
             <hr>
 
           </div>
@@ -34,13 +34,16 @@
             
                   <p>Are you sure you want to delete "?</p>
             
-                  <form action="" method="POST">
-                    
-                    <a class="btn btn-warning" href="passenger">Cancel</a>
+                  <p>Are you sure you want to delete " {{reservation}} "?</p>
+            
+                  <form action="{% url 'delete_reservation' reservation.id  %}" method="POST">
+				
+                    {% csrf_token %}
+                    <a class="btn btn-warning" href="{% url 'reservation_list' %}">Cancel</a>
             
                     <input class="btn btn-danger" type="submit" name="Confirm">
-
                   </form>
+
                 </div>
               </div>
             </div>

@@ -20,16 +20,18 @@ class Flight(models.Model):
 class ReservationFlight(models.Model):
     passenger = models.OneToOneField(Passenger, null=True, on_delete=models.CASCADE)
     sales_channel = models.CharField(max_length=200, null =True , blank= True)
-    nbr_seat = models.IntegerField(null= True , blank= True )
     flight = models.OneToOneField(Flight, null=True, on_delete=models.CASCADE)
-    nbr_days_stay = models.IntegerField(null = True, blank=True)
+    travel_duration = models.IntegerField(null = True, blank=True)
     extra_baggage = models.BooleanField(null = True, blank=True) 
     meal = models.BooleanField(null = True, blank=True) 
     preffered_seat = models.BooleanField(null = True, blank=True) 
-    nbr_seat = models.IntegerField(null = True, blank=True)
-    type = models.CharField(max_length=200, null=True)
-    orign = models.CharField(max_length=200,null = True , blank= True )
+    number_of_chair = models.IntegerField(null= True , blank= True )
+    number_of_chairs_to_reserve = models.IntegerField(null = True, blank=True)
+    trip_type = models.CharField(max_length=200, null=True)
+    origin = models.CharField(max_length=200,null = True , blank= True )
     state = models.BooleanField(null = True, blank=True)
+    def __str__(self) :
+        return "Passenger "+ str(self.passenger.id) + " for the flight " + str(self.flight.id ) 
     
 class ReservationFlightPredictions(models.Model):
     reservationFlight = models.OneToOneField(ReservationFlight, null=True, on_delete=models.CASCADE)

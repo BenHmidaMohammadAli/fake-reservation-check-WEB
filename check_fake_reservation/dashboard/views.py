@@ -10,8 +10,24 @@ from .models import Flight ,ReservationFlight ,ReservationFlightPredictions
 
 #@unauthenticated_user
 def home_admin_reservation_dashboard (request):
+    passengers_length = len(Passenger.objects.all())
     
+    Flights_length = len(Flight.objects.all())
+    Flights_true_length = len(Flight.objects.filter(available = 1))
+    Flights_false_length = len(Flight.objects.filter(available = 0))
+
+    Reservation_length = len(ReservationFlight.objects.all())
+    Reservation_true_length = len(ReservationFlight.objects.filter(state =1))
+    Reservation_false_length = len(ReservationFlight.objects.filter(state =0))
+
     context ={
+        'passengers_length':passengers_length,
+        'Flights_length':Flights_length,
+        'Flights_true_length':Flights_true_length,
+        'Flights_false_length':Flights_false_length,
+        'Reservation_length':Reservation_length,
+        'Reservation_true_length':Reservation_true_length,
+        'Reservation_false_length':Reservation_false_length,
         'segment':'Reservation',
         'dashboard_type':'Reservation dashboard',
         }
@@ -271,13 +287,14 @@ def flights_available_list (request):
 def flights_available_view (request, pk):
     flight = Flight.objects.get(id=pk)
     user = request.user
-    form  = CreateFlightReservationForm()
+    passenger = Passenger.objects.get(user_id=user.id)
     
+    form  = CreateFlightReservationForm()
     if request.method == 'POST' :
         form = CreateFlightReservationForm(request.POST)
         if form.is_valid():
             instance = form.save()  
-            instance.passenger = user
+            instance.passenger = passenger
             instance.flight = flight
             instance.state = False
             instance.save()
@@ -293,22 +310,10 @@ def flights_available_view (request, pk):
         }
     return render(request, 'home/flights_available/show.html', context)
 
-
-#my reservation list 
-def my_reservation_list (request):
-    user = request.user
-    flight_resrvation = ReservationFlight.objects.filter(passenger_id=user.id)
-    
-    context ={
-        'segment':'my_reservations',
-        'dashboard_type':'List of my reservations',
-        }
-    return render(request, 'home/my_reservation/list.html', context)
-
-
+# reservation list 
 def reservation_list (request):
     flight_resrvation = ReservationFlight.objects.all()
-
+        
     context ={
         'flight_resrvation': flight_resrvation,
         'segment':'reservations',
@@ -316,19 +321,81 @@ def reservation_list (request):
         }
     return render(request, 'home/reservation/list.html', context)
 
+def show_reservation (request, pk):
+    reservation = ReservationFlight.objects.get(id=pk)
+
+    context ={
+        'reservation': reservation,
+        'segment':'reservations',
+        'dashboard_type':'Show Reservation',
+        }
+    return render(request, 'home/reservation/show.html', context)
+
+def delete_reservation (request,pk):
+    reservation = ReservationFlight.objects.get(id=pk)
+    
+    if request.method == "POST":
+        reservation.delete()
+        return redirect('reservation_list')
+    
+    context ={
+        'reservation':reservation,
+        'segment':'reservations',
+        'dashboard_type':'Delete Reservation',
+        }
+    return render(request, 'home/reservation/delete.html', context)
+
+def make_reservation_true (request,pk):
+    reservation = ReservationFlight.objects.get(id=pk)
+    
+    reservation.state = True
+    reservation.save()
+    return redirect('reservation_list')
+    
+
+#my reservation list 
+def my_reservation_list (request):
+    user = request.user
+    passenger_ = Passenger.objects.get(user_id=user.id)
+    print(passenger_)
+    flight_resrvation = ReservationFlight.objects.filter(passenger_id =passenger_.id)
+    print(flight_resrvation)
+    context ={
+        'flight_resrvation':flight_resrvation,
+        'segment':'my_reservations',
+        'dashboard_type':'List of my reservations',
+        }
+    return render(request, 'home/my_reservation/list.html', context)
+
+def show_my_reservation (request, pk):
+    reservation = ReservationFlight.objects.get(id=pk)
+
+    context ={
+        'reservation': reservation,
+        'segment':'my_reservations',
+        'dashboard_type':'Show My Reservation',
+        }
+    return render(request, 'home/my_reservation/show.html', context)
+
+
+def delete_my_reservation (request,pk):
+    reservation = ReservationFlight.objects.get(id=pk)
+    
+    if request.method == "POST":
+        reservation.delete()
+        return redirect('my_reservation_list')
+    
+    context ={
+        'reservation':reservation,
+        'segment':'my_reservations',
+        'dashboard_type':'Delete My Reservation',
+        }
+    return render(request, 'home/my_reservation/delete.html', context)
+
 
 #predict_reservation
 def predict_reservation_list (request):
    
-    context ={
-        'segment':'predict_reservations',
-        'dashboard_type':'List Reservations predicted',
-        }
-    return render(request, 'home/predict_reservation/list.html', context)
-
-
-
-def predict_reservation_list (request):
     context ={
         'segment':'predict_reservations',
         'dashboard_type':'List Reservations predicted',

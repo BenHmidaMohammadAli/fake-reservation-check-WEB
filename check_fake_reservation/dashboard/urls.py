@@ -33,12 +33,21 @@ urlpatterns = [
     path('flights_available', views.flights_available_list, name='flights_available_list'),
     path('flights_available_view/<str:pk>/', views.flights_available_view, name='flights_available_view'),
     
-    
+    #Reservation available
     path('reservations', views.reservation_list, name='reservation_list'),
-    
+    path('show_reservation/<str:pk>/', views.show_reservation, name='show_reservation'),
+    path('delete_reservation/<str:pk>/', views.delete_reservation, name='delete_reservation'),
+    path('make_reservation_true/<str:pk>/', views.make_reservation_true, name='make_reservation_true'),
+
+    #My reservation
+    path('my_reservation_list', views.my_reservation_list, name='my_reservation_list'),
+    path('show_my_reservation/<str:pk>', views.show_my_reservation, name='show_my_reservation'),
+    path('delete_my_reservation/<str:pk>', views.delete_my_reservation, name='delete_my_reservation'),
+
+
+
     path('predict_reservations', views.predict_reservation_list, name='predict_reservations_list'),
     
-    path('my_reservation_list', views.my_reservation_list, name='my_reservation_list'),
 
 
 

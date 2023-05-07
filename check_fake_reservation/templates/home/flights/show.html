@@ -30,14 +30,12 @@
             <form>
               <h6 class="heading-small text-muted mb-4">Passenger information</h6>
               <div class="pl-lg-4">
+                <div class="card-header border-0">
+                  <h3 class="mb-0">Flight Name {{ flight.flight_name}}</h3>
+                  <hr>
+                </div>
                 <div class="row">
-                    
-                  <div class="col-lg-6">
-                    <div class="form-group">
-                      <label class="form-control-label" for="input-username">Flight Name</label>
-                      <input type="text" id="input-username" class="form-control" placeholder="Username" value="{{ flight.flight_name}}" readonly>
-                    </div>
-                  </div>
+
                   <div class="col-lg-6">
                     <div class="form-group">
                       <label class="form-control-label" for="input-username">Flight UID</label>
@@ -75,6 +73,14 @@
                       <input type="text" id="input-username" class="form-control" placeholder="Username" value="{{ flight.flight_duration}}" readonly>
                     </div>
                   </div>
+
+                  <div class="col-lg-6">
+                    <div class="form-group">
+                      <label class="form-control-label" for="input-username">Route </label>
+                      <input type="text" id="input-username" class="form-control" placeholder="Username" value="{{ flight.route}}" readonly>
+                    </div>
+                  </div>
+
                   <div class="col-lg-6">
                     <div class="form-group">
                       <label class="form-control-label" for="input-username">Flight available</label>
@@ -87,6 +93,7 @@
                       <a href="{% url 'delete_flight' flight.id %}" class="btn btn-sm btn-default float-right"> Delete ?</a>
                     </div>
                   </div>
+                  
                   
                 </div>
                 

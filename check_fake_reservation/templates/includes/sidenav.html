@@ -11,13 +11,14 @@
       <div class="collapse navbar-collapse" id="sidenav-collapse-main">
         <!-- Nav items -->
         <ul class="navbar-nav">
+          {% if request.user.is_superuser %}
           <li class="nav-item">
             <a class="nav-link {% if segment == 'Reservation' %} active {% endif %}" href="{% url 'dashboard'%}">
               <i class="ni ni-tv-2 text-primary"></i>
               <span class="nav-link-text">Dashboard - Reservation </span>
             </a>
           </li>
-
+          
           <li class="nav-item">
             <a class="nav-link {% if segment == 'users' %} active {% endif %}" href="{% url 'user_list'%}">
               <i class="ni ni-tv-2 text-primary"></i>
@@ -31,41 +32,41 @@
               <span class="nav-link-text">List of passengers </span>
             </a>
           </li>
+
           <li class="nav-item">
             <a class="nav-link {% if segment == 'flights' %} active {% endif %}" href="{% url 'flight_list'%}">
               <i class="ni ni-tv-2 text-primary"></i>
               <span class="nav-link-text">Our flights </span>
             </a>
           </li>
-
-          <li class="nav-item">
-            <a class="nav-link {% if segment == 'flights_available' %} active {% endif %}" href="{% url 'flights_available_list'%}">
-              <i class="ni ni-tv-2 text-primary"></i>
-              <span class="nav-link-text">Flights available</span>
-            </a>
-          </li>
-
           <li class="nav-item">
             <a class="nav-link {% if segment == 'reservations' %} active {% endif %}" href="{% url 'reservation_list'%}">
               <i class="ni ni-tv-2 text-primary"></i>
               <span class="nav-link-text">Reservations </span>
             </a>
           </li>  
-
-          <li class="nav-item">
-            <a class="nav-link {% if segment == 'my_reservations' %} active {% endif %}" href="{% url 'my_reservation_list'%}">
-              <i class="ni ni-tv-2 text-primary"></i>
-              <span class="nav-link-text">My Reservations </span>
-            </a>
-          </li>   
-
           <li class="nav-item">
             <a class="nav-link {% if segment == 'predict_reservations' %} active {% endif %}" href="{% url 'predict_reservations_list'%}">
               <i class="ni ni-tv-2 text-primary"></i>
               <span class="nav-link-text">Predict Reservations Completion </span>
             </a>
-          </li>                
+          </li> 
+          {%endif%}
+          {% if request.user.is_superuser == 0%}
+          <li class="nav-item">
+            <a class="nav-link {% if segment == 'flights_available' %} active {% endif %}" href="{% url 'flights_available_list'%}">
+              <i class="ni ni-tv-2 text-primary"></i>
+              <span class="nav-link-text">Flights available</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link {% if segment == 'my_reservations' %} active {% endif %}" href="{% url 'my_reservation_list'%}">
+              <i class="ni ni-tv-2 text-primary"></i>
+              <span class="nav-link-text">My Reservations </span>
+            </a>
+          </li>                  
         </ul>
+        {%endif%}
         <!-- Divider -->
         <hr class="my-3">
         <!-- Heading -->

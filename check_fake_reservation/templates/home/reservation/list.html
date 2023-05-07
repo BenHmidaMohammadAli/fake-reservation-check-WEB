@@ -23,7 +23,6 @@
           <div class="card-header border-0">
             <h3 class="mb-0"> Reservations </h3>
             <hr>
-              <a href="#" class="btn btn-sm btn-neutral"> Add New</a>
               <a href="#" class="btn btn-sm btn-neutral">Filters</a>
           </div>
           <!-- Light table -->
@@ -32,32 +31,40 @@
               <thead class="thead-light">
                 <tr>
                   <th scope="col" class="sort" data-sort="name"></th>
+                  <th scope="col" class="sort" data-sort="name">Rservation ID</th>
                   <th scope="col" class="sort" data-sort="name">Flight UID</th>
                   <th scope="col" class="sort" data-sort="budget">Passenger UID</th>
-                  <th scope="col" class="sort" data-sort="status">State</th>
                   <th scope="col"> Actions </th>
                 </tr>
               </thead>
               <tbody class="list">
-                <tr>
+                {% for f in flight_resrvation %}
+                
+                  {% if f.state == True %}
+                  <tr class="table-success">
+                  {% else %}
+                  <tr class="table-danger">
+                  {% endif %}
+
                   
                   <td class="budget">
-                    <span class="status" > <a href="#" > Show </a> </span>
+                    <span class="status" > <a href="{% url 'show_reservation' f.id %}" > Show </a> </span>
                   </td>
 
                   <td class="budget">
                     <span class="badge badge-dot mr-4">
-                      <span class="status">pending</span>
+                      <span class="status">{{ f.flight.id}}</span>
+                    </span>
+                  </td>
+
+                  <td class="budget">
+                    <span class="badge badge-dot mr-4">
+                      <span class="status">{{ f.flight.flight_UID}}</span>
                     </span>
                   </td>
                   <td class="budget">
                     <span class="badge badge-dot mr-4">
-                      <span class="status">pending</span>
-                    </span>
-                  </td>
-                  <td class="budget">
-                    <span class="badge badge-dot mr-4">
-                      <span class="status">pending</span>
+                      <span class="status">{{ f.passenger.id}}</span>
                     </span>
                   </td>
 
@@ -68,13 +75,14 @@
                       </a>
                       <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
                         
-                        <a class="dropdown-item" href="#">Update </a>
-                        <a class="dropdown-item" href="#">Delete </a>
+                        <a class="dropdown-item" href="{% url 'make_reservation_true' f.id %}">Make it True </a>
+                        <a class="dropdown-item" href="{% url 'delete_reservation' f.id %}">Delete </a>
                       </div>
                     </div>
                   </td>
                 </tr>
 
+                {% endfor %}
               </tbody>
             </table>
           </div>

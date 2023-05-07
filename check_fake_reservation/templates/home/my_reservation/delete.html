@@ -34,12 +34,14 @@
             
                   <p>Are you sure you want to delete "?</p>
             
-                  <form action="" method="POST">
-                    
-                    <a class="btn btn-warning" href="passenger">Cancel</a>
+                  <p>Are you sure you want to delete " {{reservation}} "?</p>
+            
+                  <form action="{% url 'delete_my_reservation' reservation.id  %}" method="POST">
+				
+                    {% csrf_token %}
+                    <a class="btn btn-warning" href="{% url 'my_reservation_list' %}">Cancel</a>
             
                     <input class="btn btn-danger" type="submit" name="Confirm">
-
                   </form>
                 </div>
               </div>

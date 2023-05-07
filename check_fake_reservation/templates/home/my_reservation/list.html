@@ -23,7 +23,6 @@
           <div class="card-header border-0">
             <h3 class="mb-0"> My Reservations </h3>
             <hr>
-              <a href="#" class="btn btn-sm btn-neutral"> Add New</a>
               <a href="#" class="btn btn-sm btn-neutral">Filters</a>
           </div>
           <!-- Light table -->
@@ -32,60 +31,59 @@
               <thead class="thead-light">
                 <tr>
                   <th scope="col" class="sort" data-sort="name"></th>
-                  <th scope="col" class="sort" data-sort="name">Project</th>
-                  <th scope="col" class="sort" data-sort="budget">Budget</th>
-                  <th scope="col" class="sort" data-sort="status">Status</th>
-                  <th scope="col">Users</th>
-                  <th scope="col" class="sort" data-sort="completion">Completion</th>
+                  <th scope="col" class="sort" data-sort="name">Reservations ID</th>
+                  <th scope="col" class="sort" data-sort="budget">From</th>
+                  <th scope="col" class="sort" data-sort="status">TO </th>
+                  <th scope="col" class="sort" data-sort="status">Flight Day</th>
                   <th scope="col"> Actions </th>
                 </tr>
               </thead>
               <tbody class="list">
-                <tr>
-                  
+
+                {% for f in flight_resrvation%}
+                {% if f.state == True %}
+                <tr class="table-success">
+                {% else %}
+                <tr class="table-danger">
+                {% endif %}
+
                   <td class="budget">
-                    <span class="status" > <a href="#" > Show </a> </span>
+                    <span class="status" > <a href="{% url 'show_my_reservation' f.id %}" > Show </a> </span>
                   </td>
 
                   <td class="budget">
                     <span class="badge badge-dot mr-4">
-                      <span class="status">pending</span>
+                      <span class="status">{{f.id}}</span>
                     </span>
                   </td>
                   <td class="budget">
                     <span class="badge badge-dot mr-4">
-                      <span class="status">pending</span>
+                      <span class="status">{{f.flight.From}}</span>
                     </span>
                   </td>
                   <td class="budget">
                     <span class="badge badge-dot mr-4">
-                      <span class="status">pending</span>
+                      <span class="status">{{f.flight.To}}</span>
                     </span>
                   </td>
                   <td class="budget">
                     <span class="badge badge-dot mr-4">
-                      <span class="status">pending</span>
+                      <span class="status">{{f.flight.flight_start}}</span>
                     </span>
                   </td>
-                  <td class="budget">
-                    <span class="badge badge-dot mr-4">
-                      <span class="status">pending</span>
-                    </span>
-                  </td>
+
                   <td class="text-right">
                     <div class="dropdown">
                       <a class="btn btn-sm btn-icon-only text-light" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <i class="fas fa-ellipsis-v"></i>
                       </a>
                       <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
-                        
-                        <a class="dropdown-item" href="#">Update </a>
-                        <a class="dropdown-item" href="#">Delete </a>
+                        <a class="dropdown-item" href="{% url 'delete_my_reservation' f.id %}">Delete </a>
                       </div>
                     </div>
                   </td>
                 </tr>
-
+                {% endfor %}
               </tbody>
             </table>
           </div>
