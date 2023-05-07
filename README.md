@@ -2,19 +2,19 @@ fake-reservation-check-WEB
 
 
 - Step 1 :  
-$ 'pip install -r requirement.txt'
+$ `pip install -r requirement.txt`
 
 - Step 2 : 
-$ 'cd check_fake_reservation'
+$ `cd check_fake_reservation`
 
 - Step 3 : 
-$ 'python manage.py makemigrations'
+$ `python manage.py makemigrations`
 
 - Step 4 : 
-$ 'python manage.py migrate'
+$ `python manage.py migrate`
 
 - Step 5 : 
-$ 'python manage.py runserver'
+$ `python manage.py runserver`
 
 
 - To Back to see all parts of project : 
