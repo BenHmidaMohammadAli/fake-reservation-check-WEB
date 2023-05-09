@@ -4,7 +4,7 @@ from django.shortcuts import redirect
 def unauthenticated_user (view_func):
     def wrapper_func(request ,*args, **kwargs):
         if request.user.is_authenticated:
-            return redirect ('admin_dashboard')
+            return redirect ('dashboard')
         else :
             return redirect ('login')
     return wrapper_func

@@ -3,6 +3,8 @@
         <div class="container-fluid">
           <div class="header-body">
             <!-- Card stats -->
+            {% if request.user.is_superuser %}
+
             <div class="row">
               <div class="col-xl-3 col-md-4">
                 <div class="card card-stats">
@@ -140,6 +142,7 @@
               </div>
 
             </div>
+            {% endif%}
           </div>
         </div>
       </div>

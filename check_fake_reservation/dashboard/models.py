@@ -18,9 +18,11 @@ class Flight(models.Model):
         return self.name 
     
 class ReservationFlight(models.Model):
-    passenger = models.OneToOneField(Passenger, null=True, on_delete=models.CASCADE)
+    passenger = models.ForeignKey(Passenger, null=True, on_delete=models.CASCADE)
+    #passenger = models.OneToOneField(Passenger, null=True, on_delete=models.CASCADE)
     sales_channel = models.CharField(max_length=200, null =True , blank= True)
-    flight = models.OneToOneField(Flight, null=True, on_delete=models.CASCADE)
+    flight = models.ForeignKey(Flight, null=True, on_delete=models.CASCADE)
+    #flight = models.OneToOneField(Flight, null=True, on_delete=models.CASCADE)
     travel_duration = models.IntegerField(null = True, blank=True)
     extra_baggage = models.BooleanField(null = True, blank=True) 
     meal = models.BooleanField(null = True, blank=True) 
@@ -35,5 +37,5 @@ class ReservationFlight(models.Model):
     
 class ReservationFlightPredictions(models.Model):
     reservationFlight = models.OneToOneField(ReservationFlight, null=True, on_delete=models.CASCADE)
-    complete = models.BooleanField(null = True, blank=True)
+    complete = models.CharField(max_length=200,null = True , blank= True )
 

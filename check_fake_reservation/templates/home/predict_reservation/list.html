@@ -23,7 +23,8 @@
           <div class="card-header border-0">
             <h3 class="mb-0"> Predict Reservations Complection</h3>
             <hr>
-              <a href="#" class="btn btn-sm btn-neutral"> Add New</a>
+              <a href="{% url 'predict_reservation_reset_all' %}" class="btn btn-sm btn-neutral">Reset All</a>
+              <a href="{% url 'predict_reservation' %}" class="btn btn-sm btn-neutral"> Predict </a>
               <a href="#" class="btn btn-sm btn-neutral">Filters</a>
           </div>
           <!-- Light table -->
@@ -32,60 +33,50 @@
               <thead class="thead-light">
                 <tr>
                   <th scope="col" class="sort" data-sort="name"></th>
-                  <th scope="col" class="sort" data-sort="name">Project</th>
-                  <th scope="col" class="sort" data-sort="budget">Budget</th>
-                  <th scope="col" class="sort" data-sort="status">Status</th>
-                  <th scope="col">Users</th>
-                  <th scope="col" class="sort" data-sort="completion">Completion</th>
-                  <th scope="col"> Actions </th>
+                  <th scope="col" class="sort" data-sort="name">ID Reservations</th>
+                  <th scope="col" class="sort" data-sort="budget">ID Flight</th>
+                  <th scope="col" class="sort" data-sort="status">ID Passenger</th>
+                  <th scope="col">Completion State (Predict)</th>
                 </tr>
               </thead>
               <tbody class="list">
-                <tr>
-                  
+                {% for f in reservation_predicted_list %}
+                
+                  {% if f.complete == "1" %}
+                  <tr class="table-success">
+                  {% elif f.complete == "0" %}
+                  <tr class="table-danger">
+                  {% else  %}
+                  <tr class="table-warning">
+                  {% endif %}
+
                   <td class="budget">
-                    <span class="status" > <a href="#" > Show </a> </span>
+                    <span class="status" > <a href="{% url 'predict_reservation_show' f.id%}" > Show </a> </span>
                   </td>
 
                   <td class="budget">
                     <span class="badge badge-dot mr-4">
-                      <span class="status">pending</span>
+                      <span class="status">{{f.id}}</span>
                     </span>
                   </td>
                   <td class="budget">
                     <span class="badge badge-dot mr-4">
-                      <span class="status">pending</span>
+                      <span class="status">{{f.reservationFlight.flight.id}}</span>
                     </span>
                   </td>
                   <td class="budget">
                     <span class="badge badge-dot mr-4">
-                      <span class="status">pending</span>
+                      <span class="status">{{f.reservationFlight.passenger.id}}</span>
                     </span>
                   </td>
                   <td class="budget">
                     <span class="badge badge-dot mr-4">
-                      <span class="status">pending</span>
+                      <span class="status">{{f.complete}}</span>
                     </span>
                   </td>
-                  <td class="budget">
-                    <span class="badge badge-dot mr-4">
-                      <span class="status">pending</span>
-                    </span>
-                  </td>
-                  <td class="text-right">
-                    <div class="dropdown">
-                      <a class="btn btn-sm btn-icon-only text-light" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <i class="fas fa-ellipsis-v"></i>
-                      </a>
-                      <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
-                        
-                        <a class="dropdown-item" href="#">Update </a>
-                        <a class="dropdown-item" href="#">Delete </a>
-                      </div>
-                    </div>
-                  </td>
+
                 </tr>
-
+                {% endfor %}
               </tbody>
             </table>
           </div>

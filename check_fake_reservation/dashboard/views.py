@@ -10,29 +10,31 @@ from .models import Flight ,ReservationFlight ,ReservationFlightPredictions
 
 #@unauthenticated_user
 def home_admin_reservation_dashboard (request):
-    passengers_length = len(Passenger.objects.all())
-    
-    Flights_length = len(Flight.objects.all())
-    Flights_true_length = len(Flight.objects.filter(available = 1))
-    Flights_false_length = len(Flight.objects.filter(available = 0))
+    if request.user.is_authenticated:
+        passengers_length = len(Passenger.objects.all())
+        
+        Flights_length = len(Flight.objects.all())
+        Flights_true_length = len(Flight.objects.filter(available = 1))
+        Flights_false_length = len(Flight.objects.filter(available = 0))
 
-    Reservation_length = len(ReservationFlight.objects.all())
-    Reservation_true_length = len(ReservationFlight.objects.filter(state =1))
-    Reservation_false_length = len(ReservationFlight.objects.filter(state =0))
+        Reservation_length = len(ReservationFlight.objects.all())
+        Reservation_true_length = len(ReservationFlight.objects.filter(state =1))
+        Reservation_false_length = len(ReservationFlight.objects.filter(state =0))
 
-    context ={
-        'passengers_length':passengers_length,
-        'Flights_length':Flights_length,
-        'Flights_true_length':Flights_true_length,
-        'Flights_false_length':Flights_false_length,
-        'Reservation_length':Reservation_length,
-        'Reservation_true_length':Reservation_true_length,
-        'Reservation_false_length':Reservation_false_length,
-        'segment':'Reservation',
-        'dashboard_type':'Reservation dashboard',
-        }
-    return render(request, 'home/index_reservation.html', context)
-
+        context ={
+            'passengers_length':passengers_length,
+            'Flights_length':Flights_length,
+            'Flights_true_length':Flights_true_length,
+            'Flights_false_length':Flights_false_length,
+            'Reservation_length':Reservation_length,
+            'Reservation_true_length':Reservation_true_length,
+            'Reservation_false_length':Reservation_false_length,
+            'segment':'Reservation',
+            'dashboard_type':'Reservation dashboard',
+            }
+        return render(request, 'home/index_reservation.html', context)
+    else :
+        return redirect ('login')
 
 #User Controllerss
 def user_list (request):
@@ -298,6 +300,8 @@ def flights_available_view (request, pk):
             instance.flight = flight
             instance.state = False
             instance.save()
+            
+            ReservationFlightPredictions.objects.create(reservationFlight= instance, complete= "Pending Model Application")
             return redirect ('flights_available_list')
         else:
             print("------------", form.errors)
@@ -334,10 +338,12 @@ def show_reservation (request, pk):
 def delete_reservation (request,pk):
     reservation = ReservationFlight.objects.get(id=pk)
     
+    reservationPredict = ReservationFlightPredictions.objects.get(reservationFlight_id=pk)
+
     if request.method == "POST":
         reservation.delete()
+        reservationPredict.delete()
         return redirect('reservation_list')
-    
     context ={
         'reservation':reservation,
         'segment':'reservations',
@@ -380,9 +386,12 @@ def show_my_reservation (request, pk):
 
 def delete_my_reservation (request,pk):
     reservation = ReservationFlight.objects.get(id=pk)
+    reservationPredict = ReservationFlightPredictions.objects.get(reservationFlight_id=pk)
     
     if request.method == "POST":
         reservation.delete()
+        reservationPredict.delete()
+        
         return redirect('my_reservation_list')
     
     context ={
@@ -395,15 +404,60 @@ def delete_my_reservation (request,pk):
 
 #predict_reservation
 def predict_reservation_list (request):
+    reservation_predicted_list = ReservationFlightPredictions.objects.all()
+    
+    context ={
+        'reservation_predicted_list':reservation_predicted_list,
+        'segment':'predict_reservations',
+        'dashboard_type':'List Reservations predicted',
+        }
+    return render(request, 'home/predict_reservation/list.html', context)
+
+def predict_reservation_reset_all (request):
+    reservation_predicted_list = ReservationFlightPredictions.objects.all()
+    
+    for i in reservation_predicted_list:
+        i.complete = "Pending Model Application"
+        i.save()
+    
+    reservation_predicted_list = ReservationFlightPredictions.objects.all()
+    context ={
+        'reservation_predicted_list':reservation_predicted_list,
+        'segment':'predict_reservations',
+        'dashboard_type':'List Reservations predicted',
+        }
+    return render(request, 'home/predict_reservation/list.html', context)
+
+def predict_reservation_show (request,pk):
+    reservation_predicted = ReservationFlightPredictions.objects.get(id=pk)
+    
+    print(reservation_predicted)
    
     context ={
+        'reservation_predicted':reservation_predicted,
+        'segment':'predict_reservations',
+        'dashboard_type':'List Reservations predicted',
+        }
+    return render(request, 'home/predict_reservation/list.html', context)
+
+def predict_reservation (request):
+    reservation_predicted_list = ReservationFlightPredictions.objects.all()
+    
+    for i in reservation_predicted_list:
+        i.complete = "1"
+        i.save()
+    
+    reservation_predicted_list = ReservationFlightPredictions.objects.all()
+    
+    context ={
+        'reservation_predicted_list':reservation_predicted_list,
         'segment':'predict_reservations',
         'dashboard_type':'List Reservations predicted',
         }
     return render(request, 'home/predict_reservation/list.html', context)
 
 
-
+#profil update and show 
 def user_profil (request):
     user = request.user
     form = CreateUserForm(instance=user)  

@@ -45,9 +45,11 @@ urlpatterns = [
     path('delete_my_reservation/<str:pk>', views.delete_my_reservation, name='delete_my_reservation'),
 
 
-
+    #prediction
     path('predict_reservations', views.predict_reservation_list, name='predict_reservations_list'),
-    
+    path('predict_reservation_reset_all', views.predict_reservation_reset_all, name='predict_reservation_reset_all'),
+    path('predict_reservation_show/<str:pk>', views.predict_reservation_show, name='predict_reservation_show'),
+    path('predict_reservation', views.predict_reservation, name='predict_reservation'),
 
 
 
