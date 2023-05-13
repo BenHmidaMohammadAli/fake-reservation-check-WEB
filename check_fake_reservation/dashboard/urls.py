@@ -50,6 +50,7 @@ urlpatterns = [
     path('predict_reservation_reset_all', views.predict_reservation_reset_all, name='predict_reservation_reset_all'),
     path('predict_reservation_show/<str:pk>', views.predict_reservation_show, name='predict_reservation_show'),
     path('predict_reservation', views.predict_reservation, name='predict_reservation'),
+    path('export_csv', views.export_csv, name='export_csv'),
 
 
 

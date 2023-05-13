@@ -5,6 +5,10 @@ from .form import CreatePassengerForm  , CreateUserForm, CreateFlightForm , Crea
 from django.contrib.auth.models import User
 from django.contrib import messages
 from .models import Flight ,ReservationFlight ,ReservationFlightPredictions
+from .Model.model import model_predict
+from datetime import datetime
+import csv 
+
 # Create your views here.
 
 
@@ -444,7 +448,37 @@ def predict_reservation (request):
     reservation_predicted_list = ReservationFlightPredictions.objects.all()
     
     for i in reservation_predicted_list:
-        i.complete = "1"
+        #flight hour        
+        # flight day
+        date_obj = i.reservationFlight.flight.flight_start
+        day = date_obj.day
+        hour = date_obj.hour
+        #Internet,Mobile
+        if i.reservationFlight.sales_channel == "Mobile":
+            Mobile =1
+            Internet=0
+        elif i.reservationFlight.sales_channel =='Internet' :
+            Mobile =0
+            Internet=1
+        #RoundTRip,OneWayTrip,CircleTrip
+        if i.reservationFlight.trip_type == 'RoundTrip' :
+            RoundTRip= 1
+            OneWayTrip=0
+            CircleTrip=0
+        elif i.reservationFlight.trip_type == 'CircleTrip' :
+            RoundTRip= 0
+            OneWayTrip=0
+            CircleTrip=1
+        elif i.reservationFlight.trip_type == 'OneWay' :
+            RoundTRip= 0
+            OneWayTrip=1
+            CircleTrip=0
+        L= [i.reservationFlight.number_of_chairs_to_reserve, i.reservationFlight.travel_duration,
+            i.reservationFlight.travel_duration,hour,day,i.reservationFlight.extra_baggage,
+            i.reservationFlight.preffered_seat,i.reservationFlight.meal,i.reservationFlight.travel_duration,
+            Internet,Mobile ,RoundTRip,OneWayTrip,CircleTrip]
+        result = model_predict(L)
+        i.complete = result
         i.save()
     
     reservation_predicted_list = ReservationFlightPredictions.objects.all()
@@ -455,8 +489,23 @@ def predict_reservation (request):
         'dashboard_type':'List Reservations predicted',
         }
     return render(request, 'home/predict_reservation/list.html', context)
-
-
+#Export Csv 
+def export_csv(request):
+    reservation_predicted_list = ReservationFlightPredictions.objects.all()
+    with open(r'C:\Users\Administrator\Desktop\file.csv','w' ,newline='') as f:
+        writer = csv.writer(f)
+        writer.writerow(['ID RESERVATIONS','ID FLIGHT','ID PASSENGER','COMPLETION STATE (PREDICT)'])
+        for row in reservation_predicted_list:
+            writer.writerow([row.id, row.reservationFlight.flight.id, row.reservationFlight.passenger.id, row.complete])
+    
+    
+    context ={
+        'reservation_predicted_list':reservation_predicted_list,
+        'segment':'predict_reservations',
+        'dashboard_type':'List Reservations predicted',
+        }
+    return render(request, 'home/predict_reservation/list.html', context)
+            
 #profil update and show 
 def user_profil (request):
     user = request.user
