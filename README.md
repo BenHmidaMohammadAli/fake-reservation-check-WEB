@@ -13,7 +13,10 @@ $ `python manage.py makemigrations`
 - Step 4 : 
 $ `python manage.py migrate`
 
-- Step 5 : 
+- Step 5 : (To Create Admin Account In your DB )
+$ `python manage.py createsuperuser`
+
+- Step 6 : 
 $ `python manage.py runserver`
 
 
