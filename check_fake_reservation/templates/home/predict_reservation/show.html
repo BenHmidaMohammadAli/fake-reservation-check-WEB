@@ -8,7 +8,11 @@
     <div class="container-fluid">
       <div class="header-body">
         <div class="row align-items-center py-4">
-
+          {% if reservation_predicted.complete == True %}
+          <button type="button" class="btn btn-success">{{reservation_predicted.complete}} </button>
+          {% else %} 
+          <button type="button" class="btn btn-danger">{{reservation_predicted.complete}} </button>
+          {% endif %}
         </div>
       </div>
     </div>
@@ -20,36 +24,131 @@
       <div class="col">
         <div class="card">
           <!-- Card header -->
-          <div class="card-header border-0">
-            <h3 class="mb-0">Passengers </h3>
-            <hr>
-
-          </div>
           <!-- Form -->
           <div class="card-body">
+
+            <h6 class="heading-small text-muted mb-4">Flight information</h6>
+            <div class="card-header border-0">
+              <h3 class="mb-0">Flight informations </h3>
+              <hr>
+            </div>
+
+
+
+            <div class="d-flex flex-row mb-6">
+              <img src="https://i.imgur.com/ccMhxvC.png" width="70">
+              <div class="d-flex flex-column ml-2">
+                <span>{{reservation_predicted.reservationFlight.flight.flight_UID}}</span>
+                <span class="text-black-50">{{reservation_predicted.reservationFlight.flight.flight_name}}</span>
+              </div>
+            </div>
+            <div class="pl-lg-4">
+              <h6 class="heading-small text-muted mb-4">Form : {{reservation_predicted.reservationFlight.flight.From}}</h6> 
+              <h6 class="heading-small text-muted mb-4">To : {{reservation_predicted.reservationFlight.flight.To}}</h6>
+              <h6 class="heading-small text-muted mb-4">Start : {{reservation_predicted.reservationFlight.flight.flight_start}} </h6>
+              <h6 class="heading-small text-muted mb-4">End : {{reservation_predicted.reservationFlight.flight.flight_end}}</h6>
+              <h6 class="heading-small text-muted mb-4">Duration : {{reservation_predicted.reservationFlight.flight.flight_duration}}</h6>
+            </div>
+
+            <div class="card-header border-0">
+              <h3 class="mb-0">Passenger informations </h3>
+              <hr>
+            </div>
+            <div class="row">
+                    
+              <div class="col-lg-4">
+                <div class="form-group">
+                  <label class="form-control-label" for="input-username">UID </label>
+                  <input type="text" id="input-username" class="form-control" value="{{ reservation_predicted.reservationFlight.passenger.id }}" readonly>
+                </div>
+              </div>
+              <div class="col-lg-4">
+                <div class="form-group">
+                  <label class="form-control-label" for="input-username">First name</label>
+                  <input type="text" id="input-username" class="form-control" value="{{ reservation_predicted.reservationFlight.passenger.first_name }}" readonly>
+                </div>
+              </div>
+              <div class="col-lg-4">
+                <div class="form-group">
+                  <label class="form-control-label" for="input-username">Last name</label>
+                  <input type="text" id="input-username" class="form-control" value="{{ reservation_predicted.reservationFlight.passenger.last_name }}" readonly>
+                </div>
+              </div>              
+            </div>
+
             <form>
-              <h6 class="heading-small text-muted mb-4">Passenger information</h6>
               <div class="pl-lg-4">
+                <div class="card-header border-0">
+                  <h3 class="mb-0">Reservation informations </h3>
+                  <hr>
+                </div>
+
                 <div class="row">
                     
                   <div class="col-lg-6">
                     <div class="form-group">
-                      <label class="form-control-label" for="input-username">Username</label>
-                      <input type="text" id="input-username" class="form-control" placeholder="Username" value="{{ request.user.username }}" readonly>
+                      <label class="form-control-label" for="input-username">Travel Duration</label>
+                      <input type="text" id="input-username" class="form-control" value="{{ reservation_predicted.reservationFlight.travel_duration }}" readonly>
                     </div>
                   </div>
-
                   <div class="col-lg-6">
                     <div class="form-group">
-                      <label class="form-control-label" for="input-email">Email address</label>
-                      <input type="email" id="input-email" class="form-control" placeholder="{{ request.user.email }}" readonly >
+                      <label class="form-control-label" for="input-username">sales channel</label>
+                      <input type="text" id="input-username" class="form-control" value="{{ reservation_predicted.reservationFlight.sales_channel }}" readonly>
                     </div>
                   </div>
-
+                  <div class="col-lg-6">
+                    <div class="form-group">
+                      <label class="form-control-label" for="input-username">Number of chairs to reserve</label>
+                      <input type="text" id="input-username" class="form-control" value="{{ reservation_predicted.reservationFlight.number_of_chairs_to_reserve }}" readonly>
+                    </div>
+                  </div>
+                  <div class="col-lg-6">
+                    <div class="form-group">
+                      <label class="form-control-label" for="input-username">Origin</label>
+                      <input type="text" id="input-username" class="form-control" value="{{ reservation_predicted.reservationFlight.origin }}" readonly>
+                    </div>
+                  </div>
+                  <div class="col-lg-6">
+                    <div class="form-group">
+                      <label class="form-control-label" for="input-username">Travel Duration</label>
+                      <input type="text" id="input-username" class="form-control" value="{{ reservation_predicted.reservationFlight.travel_duration }}" readonly>
+                    </div>
+                  </div>
+                  <div class="col-lg-6">
+                    <div class="form-group">
+                      <label class="form-control-label" for="input-username">Trip Type</label>
+                      <input type="text" id="input-username" class="form-control" value="{{ reservation_predicted.reservationFlight.trip_type }}" readonly>
+                    </div>
+                  </div>
+                  <div class="col-lg-6">
+                    <div class="form-group">
+                      <label class="form-control-label" for="input-username">Extra Baggage</label>
+                      <input type="text" id="input-username" class="form-control" value="{{ reservation_predicted.reservationFlight.extra_baggage }}" readonly>
+                    </div>
+                  </div>
+                  <div class="col-lg-6">
+                    <div class="form-group">
+                      <label class="form-control-label" for="input-username">Meal</label>
+                      <input type="text" id="input-username" class="form-control" value="{{ reservation_predicted.reservationFlight.meal }}" readonly>
+                    </div>
+                  </div>
+                  <div class="col-lg-6">
+                    <div class="form-group">
+                      <label class="form-control-label" for="input-username">Preffered seat</label>
+                      <input type="text" id="input-username" class="form-control" value="{{ reservation_predicted.reservationFlight.preffered_seat }}" readonly>
+                    </div>
+                  </div>
+                  <div class="col-lg-6">
+                    <div class="form-group">
+                      <label class="form-control-label" for="input-username"> Number of chair</label>
+                      <input type="text" id="input-username" class="form-control" value="{{ reservation_predicted.reservationFlight.number_of_chair }}" readonly>
+                    </div>
+                  </div>
 
                   <div class="card-header text-center border-0 pt-8 pt-md-4 pb-0 pb-md-4">
                     <div class="d-flex justify-content-between">
-                      <a href="#" class="btn btn-sm btn-default float-right"> Delete ?</a>
+                      <a href="{% url 'predict_reservations_list'  %}" class="btn btn-sm btn-default float-right"> Return ?</a>
                     </div>
                   </div>
                   

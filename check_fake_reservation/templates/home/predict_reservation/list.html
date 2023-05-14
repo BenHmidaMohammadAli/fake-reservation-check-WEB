@@ -44,9 +44,9 @@
               <tbody class="list">
                 {% for f in reservation_predicted_list %}
                 
-                  {% if f.complete == "1" %}
+                  {% if f.complete == "True" %}
                   <tr class="table-success">
-                  {% elif f.complete == "0" %}
+                  {% elif f.complete == "Fake" %}
                   <tr class="table-danger">
                   {% else  %}
                   <tr class="table-warning">

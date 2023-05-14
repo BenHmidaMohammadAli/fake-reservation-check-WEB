@@ -435,14 +435,14 @@ def predict_reservation_reset_all (request):
 def predict_reservation_show (request,pk):
     reservation_predicted = ReservationFlightPredictions.objects.get(id=pk)
     
-    print(reservation_predicted)
-   
+    
     context ={
         'reservation_predicted':reservation_predicted,
         'segment':'predict_reservations',
         'dashboard_type':'List Reservations predicted',
         }
-    return render(request, 'home/predict_reservation/list.html', context)
+    return render(request, 'home/predict_reservation/show.html', context)
+
 
 def predict_reservation (request):
     reservation_predicted_list = ReservationFlightPredictions.objects.all()
@@ -473,10 +473,10 @@ def predict_reservation (request):
             RoundTRip= 0
             OneWayTrip=1
             CircleTrip=0
-        L= [i.reservationFlight.number_of_chairs_to_reserve, i.reservationFlight.travel_duration,
-            i.reservationFlight.travel_duration,hour,day,i.reservationFlight.extra_baggage,
-            i.reservationFlight.preffered_seat,i.reservationFlight.meal,i.reservationFlight.travel_duration,
-            Internet,Mobile ,RoundTRip,OneWayTrip,CircleTrip]
+        L= [i.reservationFlight.number_of_chairs_to_reserve,
+            i.reservationFlight.travel_duration, hour, day, i.reservationFlight.extra_baggage,
+            i.reservationFlight.preffered_seat, i.reservationFlight.meal, i.reservationFlight.travel_duration,
+            Internet, Mobile , RoundTRip, OneWayTrip, CircleTrip]
         result = model_predict(L)
         i.complete = result
         i.save()
